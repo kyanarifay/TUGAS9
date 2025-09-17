@@ -1,46 +1,61 @@
-<?php include "koneksi.php"; ?>
+<?php
+include 'koneksi.php';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $judul = $_POST['judul'];
+    $stok = $_POST['stok'];
+    $kategori = $_POST['kategori'];
+
+    $sql = "INSERT INTO buku (judul, stok, kategori) VALUES (?, ?, ?)";
+    $stmt = mysqli_prepare($koneksi, $sql);
+    mysqli_stmt_bind_param($stmt, "sis", $judul, $stok, $kategori);
+
+    if (mysqli_stmt_execute($stmt)) {
+        header("Location: index.php");
+        exit();
+    } else {
+        echo "<div class='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative' role='alert'>Error: " . mysqli_error($koneksi) . "</div>";
+    }
+    mysqli_stmt_close($stmt);
+}
+?>
+
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
     <title>Tambah Buku</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 p-6">
-    <div class="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6">
-        <h2 class="text-2xl font-bold mb-4">➕ Tambah Buku</h2>
-        <form method="post" class="space-y-4">
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+
+    <div class="container mx-auto mt-10 p-6 bg-white rounded-lg shadow-xl max-w-lg">
+        <h2 class="text-3xl font-bold mb-6 text-gray-800 text-center">Tambah Buku Baru</h2>
+        
+        <form action="tambah.php" method="POST" class="space-y-4">
             <div>
-                <label class="block font-medium">Judul</label>
-                <input type="text" name="judul" class="w-full border p-2 rounded" required>
+                <label for="judul" class="block text-sm font-medium text-gray-700">Judul</label>
+                <input type="text" id="judul" name="judul" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
             </div>
+            
             <div>
-                <label class="block font-medium">Stok</label>
-                <input type="number" name="stok" class="w-full border p-2 rounded" required>
+                <label for="stok" class="block text-sm font-medium text-gray-700">Stok</label>
+                <input type="number" id="stok" name="stok" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
             </div>
+            
             <div>
-                <label class="block font-medium">Kategori</label>
-                <input type="text" name="kategori" class="w-full border p-2 rounded" required>
+                <label for="kategori" class="block text-sm font-medium text-gray-700">Kategori</label>
+                <input type="text" id="kategori" name="kategori" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
             </div>
-            <div class="flex gap-2">
-                <input type="submit" name="simpan" value="Simpan" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
-                <a href="index.php" class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded">Batal</a>
+            
+            <div class="flex justify-end space-x-2">
+                <a href="index.php" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out">Batal</a>
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out">Simpan</button>
             </div>
         </form>
-
-        <?php
-        if(isset($_POST['simpan'])){
-            $judul = $_POST['judul'];
-            $stok = $_POST['stok'];
-            $kategori = $_POST['kategori'];
-
-            $sql = "INSERT INTO buku (judul, stok, kategori) VALUES ('$judul','$stok','$kategori')";
-            if(mysqli_query($koneksi, $sql)){
-                echo "<p class='text-green-600 mt-4'>✅ Data berhasil disimpan. <a href='index.php' class='underline'>Kembali</a></p>";
-            }else{
-                echo "<p class='text-red-600 mt-4'>❌ Error: " . mysqli_error($koneksi) . "</p>";
-            }
-        }
-        ?>
     </div>
 </body>
 </html>
+<?php
+mysqli_close($koneksi);
+?>
