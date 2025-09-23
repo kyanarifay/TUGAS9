@@ -19,6 +19,7 @@
                 <th>Kategori</th>
                 <th>Diskon (%)</th>
                 <th>Tanggal Kadaluarsa</th>
+                <th>Tebal Buku (halaman)</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -33,6 +34,7 @@
                 <td>{$row['kategori']}</td>
                 <td>{$row['diskon']}</td>
                 <td>{$row['tanggal_kadaluarsa']}</td>
+                <td>{$row['tebal_buku']}</td>
                 <td>
                     <a href='ubah.php?id={$row['id_buku']}' class='btn btn-warning btn-sm'>✏ Ubah</a>
                     <a href='hapus.php?id={$row['id_buku']}' onclick='return confirm(\"Yakin hapus?\")' class='btn btn-danger btn-sm'>🗑 Hapus</a>

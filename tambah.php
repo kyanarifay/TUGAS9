@@ -30,6 +30,10 @@
             <label class="form-label">Tanggal Kadaluarsa</label>
             <input type="date" name="tanggal_kadaluarsa" class="form-control">
         </div>
+        <div class="mb-3">
+            <label class="form-label">Tebal Buku (halaman)</label>
+            <input type="number" name="tebal_buku" class="form-control" required>
+        </div>
         <button type="submit" name="simpan" class="btn btn-success">Simpan</button>
         <a href="index.php" class="btn btn-secondary">Kembali</a>
     </form>
@@ -41,9 +45,10 @@ if (isset($_POST['simpan'])) {
     $kategori = $_POST['kategori'];
     $diskon = $_POST['diskon'];
     $tanggal_kadaluarsa = $_POST['tanggal_kadaluarsa'];
+    $tebal_buku = $_POST['tebal_buku'];
 
-    $query = "INSERT INTO buku (judul, stok, kategori, diskon, tanggal_kadaluarsa) 
-              VALUES ('$judul','$stok','$kategori','$diskon','$tanggal_kadaluarsa')";
+    $query = "INSERT INTO buku (judul, stok, kategori, diskon, tanggal_kadaluarsa, tebal_buku) 
+              VALUES ('$judul','$stok','$kategori','$diskon','$tanggal_kadaluarsa','$tebal_buku')";
     if ($koneksi->query($query)) {
         header("Location: index.php");
     } else {

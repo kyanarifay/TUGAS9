@@ -35,6 +35,10 @@
             <label class="form-label">Tanggal Kadaluarsa</label>
             <input type="date" name="tanggal_kadaluarsa" value="<?= $data['tanggal_kadaluarsa'] ?>" class="form-control">
         </div>
+        <div class="mb-3">
+            <label class="form-label">Tebal Buku (halaman)</label>
+            <input type="number" name="tebal_buku" value="<?= $data['tebal_buku'] ?>" class="form-control" required>
+        </div>
         <button type="submit" name="ubah" class="btn btn-warning">Update</button>
         <a href="index.php" class="btn btn-secondary">Kembali</a>
     </form>
@@ -46,9 +50,10 @@ if (isset($_POST['ubah'])) {
     $kategori = $_POST['kategori'];
     $diskon = $_POST['diskon'];
     $tanggal_kadaluarsa = $_POST['tanggal_kadaluarsa'];
+    $tebal_buku = $_POST['tebal_buku'];
 
     $query = "UPDATE buku SET judul='$judul', stok='$stok', kategori='$kategori', 
-              diskon='$diskon', tanggal_kadaluarsa='$tanggal_kadaluarsa' 
+              diskon='$diskon', tanggal_kadaluarsa='$tanggal_kadaluarsa', tebal_buku='$tebal_buku'
               WHERE id_buku=$id";
 
     if ($koneksi->query($query)) {
